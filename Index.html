@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Alpha Xuts — AIT Haircut Requests</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#05070d;
+    --panel:#0d1220;
+    --panel-2:#121a2e;
+    --line:#22304f;
+    --ink:#f5f7fa;
+    --muted:#8b93a7;
+    --blue:#1fa2ff;
+    --blue-dim:#0f4d80;
+    --gold:#f2c94c;
+    --red:#e6394f;
+    --green:#3ddc84;
+    --nav-h:60px;
+    --safe-b: env(safe-area-inset-bottom, 0px);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;overflow-x:hidden;}
+  body{
+    margin:0;overflow-x:hidden;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 0);
+    background-size:22px 22px;
+  }
+  input, button, select{font-size:16px;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.16em;
+    text-transform:uppercase;font-size:.7rem;color:var(--blue);
+  }
+  h1,h2,h3{font-family:'Bebas Neue',sans-serif;letter-spacing:.02em;margin:0;line-height:.97;}
+  h1{font-size:clamp(2.4rem,9vw,5.2rem);}
+  h2{font-size:clamp(1.9rem,6vw,3.2rem);}
+  h3{font-size:1.4rem;}
+  p{color:var(--muted);line-height:1.65;font-size:.98rem;}
+  a{color:var(--blue);}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px;}
+
+  /* ---------- LOGO (SVG picture, not live text) ---------- */
+  .logo-svg{display:block;height:34px;width:auto;}
+  .logo-link{display:flex;align-items:center;}
+
+  /* ---------- NAV ---------- */
+  header.site{
+    position:sticky;top:0;z-index:60;
+    background:rgba(5,7,13,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    height:var(--nav-h);
+  }
+  .navbar{
+    max-width:1080px;margin:0 auto;padding:0 20px;height:var(--nav-h);
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  nav.links{display:none;gap:4px;}
+  nav.links button{
+    background:none;border:none;color:var(--muted);
+    font-family:'JetBrains Mono',monospace;font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;
+    padding:10px 16px;cursor:pointer;border-radius:6px;transition:color .15s, background .15s;
+    min-height:44px;
+  }
+  nav.links button:hover{color:var(--ink);background:var(--panel-2);}
+  nav.links button.active{color:var(--bg);background:var(--blue);font-weight:700;}
+
+  .menu-btn{
+    display:flex;align-items:center;justify-content:center;
+    width:44px;height:44px;background:none;border:1px solid var(--line);border-radius:8px;
+    cursor:pointer;color:var(--ink);
+  }
+  .menu-btn svg{width:20px;height:20px;}
+
+  .mobile-menu{
+    position:fixed;inset:var(--nav-h) 0 0 0;z-index:55;
+    background:rgba(5,7,13,0.98);backdrop-filter:blur(6px);
+    transform:translateY(-8px);opacity:0;pointer-events:none;
+    transition:opacity .18s ease, transform .18s ease;
+    padding:14px 20px 30px;
+  }
+  .mobile-menu.open{opacity:1;pointer-events:auto;transform:translateY(0);}
+  .mobile-menu button{
+    display:block;width:100%;text-align:left;background:var(--panel);
+    border:1px solid var(--line);color:var(--ink);
+    font-family:'JetBrains Mono',monospace;font-size:.95rem;letter-spacing:.04em;text-transform:uppercase;
+    padding:18px 18px;border-radius:8px;margin-bottom:10px;cursor:pointer;min-height:56px;
+  }
+  .mobile-menu button.active{background:var(--blue);color:#04101c;font-weight:700;border-color:var(--blue);}
+
+  /* ---------- PAGES ---------- */
+  .page{display:none;}
+  .page.active{display:block;}
+  section{padding:56px 0;}
+  section.tight{padding:36px 0;}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;overflow:hidden;padding:52px 0 44px;border-bottom:1px solid var(--line);}
+  .burst{
+    position:absolute;top:-120px;right:-160px;width:380px;height:380px;
+    background:conic-gradient(from 0deg, var(--blue) 0 10deg, transparent 10deg 30deg,
+      var(--blue) 30deg 40deg, transparent 40deg 60deg, var(--blue) 60deg 70deg, transparent 70deg 90deg,
+      var(--blue) 90deg 100deg, transparent 100deg 120deg, var(--blue) 120deg 130deg, transparent 130deg 150deg,
+      var(--blue) 150deg 160deg, transparent 160deg 180deg, var(--blue) 180deg 190deg, transparent 190deg 210deg,
+      var(--blue) 210deg 220deg, transparent 220deg 240deg, var(--blue) 240deg 250deg, transparent 250deg 270deg,
+      var(--blue) 270deg 280deg, transparent 280deg 300deg, var(--blue) 300deg 310deg, transparent 310deg 330deg,
+      var(--blue) 330deg 340deg, transparent 340deg 360deg);
+    opacity:.10;border-radius:50%;
+  }
+  .hero-inner{position:relative;z-index:1;max-width:640px;}
+  .hero .eyebrow{margin-bottom:12px;display:block;}
+  .hero h1{margin-bottom:16px;}
+  .hero p.lead{max-width:520px;margin-bottom:26px;}
+  .cta-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.8rem;letter-spacing:.07em;text-transform:uppercase;
+    padding:15px 22px;border-radius:6px;cursor:pointer;border:2px solid transparent;
+    transition:transform .12s ease, box-shadow .12s ease;min-height:50px;
+  }
+  .btn:active{transform:scale(.97);}
+  .btn-primary{background:var(--blue);color:#04101c;}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--blue);color:var(--blue);}
+
+  .panel-strip{display:flex;flex-direction:column;gap:2px;margin-top:40px;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .panel-strip .cell{padding:18px 18px;background:var(--panel);}
+  .panel-strip .cell + .cell{border-top:1px solid var(--line);}
+  .panel-strip .cell .num{font-family:'JetBrains Mono',monospace;color:var(--blue);font-weight:700;font-size:.72rem;letter-spacing:.1em;}
+  .panel-strip .cell h4{font-family:'Bebas Neue';font-size:1.25rem;margin:5px 0;}
+  .panel-strip .cell p{font-size:.86rem;margin:0;}
+
+  .sec-head{margin-bottom:28px;max-width:640px;}
+  .sec-head .eyebrow{margin-bottom:8px;display:block;}
+  .sec-head p{margin-top:10px;}
+
+  /* ---------- AR 670-1 CARD ---------- */
+  .reg-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:26px;position:relative;}
+  .reg-card::before{content:"";position:absolute;left:0;top:20px;bottom:20px;width:4px;background:var(--blue);border-radius:0 4px 4px 0;}
+  .reg-card h3{margin-bottom:10px;}
+  .reg-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+  .reg-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;
+    text-decoration:none;color:var(--blue);border:1px solid var(--blue-dim);background:transparent;
+    padding:13px 18px;border-radius:8px;cursor:pointer;min-height:48px;
+  }
+  .reg-btn:hover{background:var(--blue-dim);}
+  .reg-btn.secondary{color:var(--muted);border-color:var(--line);}
+  .reg-btn.secondary:hover{color:var(--ink);border-color:var(--muted);}
+
+  /* ---------- STANDARD GRID ---------- */
+  .std-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-top:24px;}
+  .std-item{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px;}
+  .std-item .mark{color:var(--gold);font-family:'JetBrains Mono',monospace;font-weight:700;}
+  .std-item p{margin:8px 0 0;font-size:.9rem;}
+
+  /* ---------- PHASE BLOCKS ---------- */
+  .phase-block{border-radius:12px;padding:28px;position:relative;overflow:hidden;border:1px solid var(--line);}
+  .phase-block.p5{background:linear-gradient(135deg, rgba(230,57,79,.13), var(--panel) 60%);}
+  .phase-block.p6{background:linear-gradient(135deg, rgba(31,162,255,.15), var(--panel) 60%);}
+  .phase-tag{font-family:'JetBrains Mono',monospace;letter-spacing:.14em;font-size:.72rem;font-weight:700;text-transform:uppercase;}
+  .p5 .phase-tag{color:var(--red);}
+  .p6 .phase-tag{color:var(--blue);}
+  .phase-block .headline{font-family:'Bebas Neue';font-size:1.9rem;margin:8px 0 12px;}
+  .p5 .headline{color:var(--red);}
+  .p6 .headline{color:var(--blue);}
+  .phase-flow{
+    display:inline-flex;align-items:center;gap:10px;margin-top:18px;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:.85rem;
+    background:rgba(0,0,0,.35);border:1px solid var(--line);border-radius:6px;padding:10px 14px;
+  }
+  .phase-flow .arrow{color:var(--muted);}
+  .two-col{display:grid;grid-template-columns:1fr;gap:18px;}
+
+  .notice{margin-top:40px;border:1px solid rgba(242,201,76,.4);background:rgba(242,201,76,.07);border-radius:10px;padding:22px;}
+  .notice .eyebrow{color:var(--gold);}
+  .notice p{color:#d9d2b8;margin-top:8px;font-size:.88rem;}
+
+  /* ---------- MODAL ---------- */
+  .modal-backdrop{
+    position:fixed;inset:0;background:rgba(2,3,7,0.7);z-index:100;
+    display:none;align-items:flex-end;justify-content:center;
+  }
+  .modal-backdrop.open{display:flex;}
+  .modal{
+    background:var(--panel);width:100%;max-width:720px;
+    max-height:88vh;overflow-y:auto;border-radius:16px 16px 0 0;
+    border:1px solid var(--line);border-bottom:none;
+    padding:26px 22px calc(26px + var(--safe-b));
+    -webkit-overflow-scrolling:touch;
+  }
+  .modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:6px;position:sticky;top:-26px;background:var(--panel);padding-top:4px;}
+  .modal-close{
+    width:40px;height:40px;flex:0 0 40px;border-radius:50%;border:1px solid var(--line);
+    background:var(--bg);color:var(--ink);font-size:1.1rem;cursor:pointer;
+  }
+  .modal h2{margin-bottom:4px;}
+  .modal .modal-sub{margin-bottom:20px;}
+  .reg-section{margin-bottom:22px;}
+  .reg-section h4{font-family:'Bebas Neue';font-size:1.25rem;color:var(--ink);margin-bottom:8px;letter-spacing:.02em;}
+  .reg-section p{font-size:.9rem;margin:0 0 8px;}
+  .reg-section ul{margin:0;padding-left:18px;}
+  .reg-section li{color:var(--muted);font-size:.9rem;line-height:1.6;margin-bottom:6px;}
+  .reg-source{
+    margin-top:24px;padding-top:18px;border-top:1px solid var(--line);
+    font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--muted);
+  }
+  .reg-source a{color:var(--blue);}
+
+  @media(min-width:720px){
+    .modal-backdrop{align-items:center;}
+    .modal{border-radius:16px;border-bottom:1px solid var(--line);}
+  }
+
+  /* ---------- FORM ---------- */
+  .form-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px 22px;max-width:620px;}
+  .field{margin-bottom:22px;}
+  .field label{
+    display:block;font-family:'JetBrains Mono',monospace;font-size:.72rem;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:9px;
+  }
+  .field input[type=text], .field input[type=tel]{
+    width:100%;background:var(--bg);border:1px solid var(--line);border-radius:8px;
+    color:var(--ink);padding:15px 14px;font-family:'Inter';transition:border-color .15s;
+    min-height:50px;
+  }
+  .field input:focus{outline:none;border-color:var(--blue);}
+  .field input.error{border-color:var(--red);}
+  .field .err-msg{color:var(--red);font-size:.76rem;margin-top:6px;display:none;font-family:'JetBrains Mono',monospace;}
+  .field .err-msg.show{display:block;}
+
+  .choice-row{display:grid;gap:10px;}
+  .choice-row.two{grid-template-columns:1fr 1fr;}
+  .choice-row.four{grid-template-columns:1fr 1fr;}
+  .choice-row.three{grid-template-columns:1fr;}
+  .choice-pill{
+    background:var(--bg);border:1px solid var(--line);border-radius:8px;
+    padding:14px 10px;text-align:center;cursor:pointer;
+    font-family:'JetBrains Mono',monospace;font-size:.82rem;letter-spacing:.03em;
+    color:var(--muted);transition:all .12s;user-select:none;min-height:50px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .choice-pill.selected{background:var(--blue);border-color:var(--blue);color:#04101c;font-weight:700;}
+
+  .submit-btn{
+    width:100%;background:var(--blue);color:#04101c;border:none;border-radius:8px;
+    padding:17px;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:.88rem;
+    letter-spacing:.1em;text-transform:uppercase;cursor:pointer;margin-top:6px;min-height:54px;
+  }
+  .submit-btn:disabled{opacity:.6;cursor:not-allowed;}
+
+  .confirm-card{background:var(--panel);border:1px solid var(--green);border-radius:12px;padding:32px 24px;max-width:620px;text-align:left;}
+  .confirm-card .eyebrow{color:var(--green);}
+  .confirm-card h2{margin:10px 0 12px;}
+
+  .form-msg{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--red);margin-top:14px;display:none;}
+  .form-msg.show{display:block;}
+
+  /* ---------- STICKY MOBILE CTA ---------- */
+  .sticky-cta{
+    position:fixed;left:0;right:0;bottom:0;z-index:40;
+    padding:12px 16px calc(12px + var(--safe-b));
+    background:linear-gradient(0deg, rgba(5,7,13,0.98) 60%, rgba(5,7,13,0));
+    display:flex;
+  }
+  .sticky-cta button{
+    width:100%;background:var(--blue);color:#04101c;border:none;border-radius:10px;
+    padding:16px;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:.85rem;
+    letter-spacing:.08em;text-transform:uppercase;box-shadow:0 8px 24px rgba(0,0,0,.4);
+    min-height:52px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line);padding:36px 0 28px;margin-top:30px;}
+  footer .wrap{display:flex;flex-direction:column;gap:22px;}
+  footer .foot-brand{display:flex;flex-direction:column;gap:10px;}
+  footer .foot-sub{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--muted);letter-spacing:.1em;}
+  footer nav{display:flex;flex-direction:column;gap:4px;}
+  footer nav button{
+    background:none;border:none;color:var(--muted);cursor:pointer;text-align:left;
+    font-family:'JetBrains Mono',monospace;font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;
+    padding:10px 0;min-height:40px;
+  }
+  footer nav button:hover{color:var(--blue);}
+
+  /* ---------- DESKTOP OVERRIDES ---------- */
+  @media(min-width:860px){
+    :root{--nav-h:76px;}
+    .wrap{padding:0 24px;}
+    nav.links{display:flex;}
+    .menu-btn{display:none;}
+    .mobile-menu{display:none !important;}
+    section{padding:80px 0;}
+    section.tight{padding:56px 0;}
+    .hero{padding:100px 0 84px;}
+    .burst{width:520px;height:520px;top:-140px;right:-120px;}
+    .panel-strip{flex-direction:row;margin-top:56px;}
+    .panel-strip .cell{flex:1;padding:22px 20px;}
+    .panel-strip .cell + .cell{border-top:none;border-left:1px solid var(--line);}
+    .std-grid{grid-template-columns:repeat(2,1fr);}
+    .std-item:last-child{grid-column:1/-1;}
+    .two-col{grid-template-columns:1fr 1fr;gap:24px;}
+    .choice-row.four{grid-template-columns:repeat(4,1fr);}
+    .choice-row.three{grid-template-columns:repeat(3,1fr);}
+    footer .wrap{flex-direction:row;justify-content:space-between;align-items:center;}
+    footer nav{flex-direction:row;gap:22px;}
+    .sticky-cta{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- reusable SVG logo mark -->
+<svg style="display:none">
+  <symbol id="axLogo" viewBox="0 0 240 56">
+    <rect x="1" y="1" width="54" height="54" rx="14" fill="#0d1220" stroke="#1fa2ff" stroke-width="2"/>
+    <path d="M32 8 L18 30 L27 30 L23 48 L40 24 L30 24 Z" fill="#1fa2ff"/>
+    <text x="68" y="38" font-family="Bebas Neue, sans-serif" font-size="30" letter-spacing="1" fill="#f5f7fa">ALPHA XUTS</text>
+  </symbol>
+</svg>
+
+<header class="site">
+  <div class="navbar">
+    <a href="#" class="logo-link" onclick="showPage('home');closeMenu();return false;" aria-label="Alpha Xuts home">
+      <svg class="logo-svg" viewBox="0 0 240 56"><use href="#axLogo"/></svg>
+    </a>
+    <nav class="links">
+      <button data-page="home" class="active" onclick="showPage('home')">Home</button>
+      <button data-page="standards" onclick="showPage('standards')">Haircut Standards</button>
+      <button data-page="request" onclick="showPage('request')">Request a Cut</button>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" onclick="toggleMenu()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button data-page="home" class="active" onclick="showPage('home');closeMenu();">Home</button>
+  <button data-page="standards" onclick="showPage('standards');closeMenu();">Haircut Standards</button>
+  <button data-page="request" onclick="showPage('request');closeMenu();">Request a Cut</button>
+</div>
+
+<!-- ================= HOME ================= -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="burst"></div>
+    <div class="wrap hero-inner">
+      <span class="eyebrow">AIT HAIRCUT REQUESTS</span>
+      <h1>SHARP LOOKS.<br>STANDARD ISSUE.</h1>
+      <p class="lead">Alpha Xuts handles haircut requests for trainees — inside the standard, on your schedule. Know what's allowed for your phase, then send your request straight through.</p>
+      <div class="cta-row">
+        <button class="btn btn-primary" onclick="showPage('request')">Request a Cut</button>
+        <button class="btn btn-ghost" onclick="showPage('standards')">View Haircut Standards</button>
+      </div>
+
+      <div class="panel-strip">
+        <div class="cell">
+          <span class="num">01</span>
+          <h4>Know the Standard</h4>
+          <p>Review AR 670-1 grooming requirements in plain language.</p>
+        </div>
+        <div class="cell">
+          <span class="num">02</span>
+          <h4>Check Your Phase</h4>
+          <p>Phase 5 and Phase 6 have different haircut allowances.</p>
+        </div>
+        <div class="cell">
+          <span class="num">03</span>
+          <h4>Send Your Request</h4>
+          <p>Submit your info and get contacted to confirm.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= HAIRCUT STANDARDS ================= -->
+<div class="page" id="page-standards">
+  <section class="tight" style="padding-top:44px;">
+    <div class="wrap">
+      <span class="eyebrow">KNOW THE STANDARD. KNOW YOUR PHASE.</span>
+      <h1 style="margin-top:12px;">HAIRCUT STANDARDS</h1>
+      <p style="max-width:600px;margin-top:14px;">Review the applicable Army grooming standards and understand how they apply to Alpha Xuts haircut requests during AIT.</p>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">REGULATION</span>
+        <h2>AR 670-1</h2>
+      </div>
+      <div class="reg-card">
+        <h3>What it covers</h3>
+        <p>Army Regulation 670-1 sets the standards for the wear and appearance of Army uniforms and insignia, including requirements for a Soldier's hair and grooming. It's the source regulation behind every haircut rule referenced on this page.</p>
+        <p>This page gives a simplified, easy-to-read summary — it isn't a substitute for the regulation itself or for the guidance your AIT chain of command gives you.</p>
+        <div class="reg-actions">
+          <button class="reg-btn" onclick="openRegModal()">📖 Read the Full Haircut Regulations</button>
+          <a class="reg-btn secondary" href="https://armypubs.army.mil/ProductMaps/PubForm/AR.aspx" target="_blank" rel="noopener">↗ Search AR 670-1 on Army Pubs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">SUMMARY</span>
+        <h2>THE STANDARD</h2>
+        <p>Military haircuts must maintain a neat, professional appearance and comply with Army grooming requirements. In practice, that means:</p>
+      </div>
+      <div class="std-grid">
+        <div class="std-item"><span class="mark">→</span><p>Hair must be neat and well groomed at all times.</p></div>
+        <div class="std-item"><span class="mark">→</span><p>Hair must not interfere with the proper wear and fit of required headgear or protective equipment.</p></div>
+        <div class="std-item"><span class="mark">→</span><p>Hair must maintain the required appearance around the ears and neckline.</p></div>
+        <div class="std-item"><span class="mark">→</span><p>Extreme or prohibited hairstyles are not permitted, regardless of phase.</p></div>
+        <div class="std-item"><span class="mark">→</span><p>Your specific AIT unit may set stricter requirements than the general Army standard — local policy always applies on top of this.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">BY PHASE</span>
+        <h2>KNOW YOUR PHASE</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="phase-block p5">
+          <span class="phase-tag">PHASE 05</span>
+          <div class="headline">0 GUARD ONLY</div>
+          <p>During Phase 5, haircut requests are limited to a 0 guard haircut. This is the clearest rule on this page — Phase 5 does not carry the additional flexibility available in Phase 6.</p>
+          <div class="phase-flow">PHASE 05 <span class="arrow">→</span> 0 GUARD</div>
+        </div>
+        <div class="phase-block p6">
+          <span class="phase-tag">PHASE 06</span>
+          <div class="headline">MORE PRIVILEGES</div>
+          <p>Phase 6 allows additional haircut options compared with Phase 5. This does not mean every hairstyle is automatically permitted — requests still have to comply with AR 670-1 and your AIT unit's rules.</p>
+          <div class="phase-flow">PHASE 06 <span class="arrow">→</span> EXPANDED OPTIONS</div>
+        </div>
+      </div>
+
+      <div class="notice">
+        <span class="eyebrow">IMPORTANT</span>
+        <p>This page is a simplified interpretation of haircut standards for Alpha Xuts. It does not replace AR 670-1, other applicable Army regulations, or local AIT policies. When requirements differ, follow the standard established by your chain of command and current AIT guidance.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= REQUEST A CUT ================= -->
+<div class="page" id="page-request">
+  <section class="tight" style="padding-top:44px;">
+    <div class="wrap">
+      <span class="eyebrow">SUBMIT YOUR INFO</span>
+      <h1 style="margin-top:12px;">REQUEST A CUT</h1>
+      <p style="max-width:560px;margin-top:14px;">Fill out the information below to request a haircut. Your request will be reviewed and you will be contacted to confirm your appointment.</p>
+    </div>
+  </section>
+
+  <section class="tight" style="padding-top:0;padding-bottom:100px;">
+    <div class="wrap">
+
+      <form class="form-card" id="cutForm" novalidate>
+        <div class="field">
+          <label for="fName">Name</label>
+          <input type="text" id="fName" placeholder="First and Last Name" autocomplete="name">
+          <div class="err-msg" id="err-name">Enter your first and last name.</div>
+        </div>
+
+        <div class="field">
+          <label>Platoon</label>
+          <div class="choice-row four" id="platoonRow">
+            <div class="choice-pill" data-value="Platoon 1">Platoon 1</div>
+            <div class="choice-pill" data-value="Platoon 2">Platoon 2</div>
+            <div class="choice-pill" data-value="Platoon 3">Platoon 3</div>
+            <div class="choice-pill" data-value="Platoon 4">Platoon 4</div>
+          </div>
+          <div class="err-msg" id="err-platoon">Select your platoon.</div>
+        </div>
+
+        <div class="field">
+          <label>Phase</label>
+          <div class="choice-row two" id="phaseRow">
+            <div class="choice-pill" data-value="Phase 5">Phase 5</div>
+            <div class="choice-pill" data-value="Phase 6">Phase 6</div>
+          </div>
+          <div class="err-msg" id="err-phase">Select your phase.</div>
+        </div>
+
+        <div class="field">
+          <label for="fPhone">Phone Number</label>
+          <input type="tel" id="fPhone" placeholder="(555) 123-4567" autocomplete="tel" inputmode="tel">
+          <div class="err-msg" id="err-phone">Enter a valid phone number.</div>
+        </div>
+
+        <div class="field">
+          <label>Preferred Day</label>
+          <div class="choice-row three" id="dayRow">
+            <div class="choice-pill" data-value="Friday">Friday</div>
+            <div class="choice-pill" data-value="Saturday">Saturday</div>
+            <div class="choice-pill" data-value="Sunday">Sunday</div>
+          </div>
+          <div class="err-msg" id="err-day">Select a preferred day.</div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">Request Appointment</button>
+        <div class="form-msg" id="formMsg"></div>
+      </form>
+
+      <div class="confirm-card" id="confirmCard" style="display:none;">
+        <span class="eyebrow">✓ SENT</span>
+        <h2>REQUEST SENT</h2>
+        <p>Your request has been received. You'll be contacted at the phone number you provided once your appointment is confirmed.</p>
+        <button class="btn btn-ghost" style="margin-top:20px;" onclick="resetForm()">Submit Another Request</button>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- sticky mobile CTA, hidden on the request page itself -->
+<div class="sticky-cta" id="stickyCta">
+  <button onclick="showPage('request')">Request a Cut</button>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-brand">
+      <svg class="logo-svg" viewBox="0 0 240 56"><use href="#axLogo"/></svg>
+      <div class="foot-sub">AIT HAIRCUT REQUESTS</div>
+    </div>
+    <nav>
+      <button onclick="showPage('home')">Home</button>
+      <button onclick="showPage('standards')">Haircut Standards</button>
+      <button onclick="showPage('request')">Request a Cut</button>
+    </nav>
+  </div>
+</footer>
+
+<!-- ================= AR 670-1 MODAL ================= -->
+<div class="modal-backdrop" id="regModal" onclick="if(event.target===this)closeRegModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <span class="eyebrow">AR 670-1 · SECTION 3-2</span>
+        <h2>HAIRCUT REGULATIONS</h2>
+      </div>
+      <button class="modal-close" onclick="closeRegModal()" aria-label="Close">✕</button>
+    </div>
+    <p class="modal-sub">A plain-language summary of the Army's hair and grooming standards that apply to haircuts. This is a simplified explanation, not the regulation itself.</p>
+
+    <div class="reg-section">
+      <h4>General Principle</h4>
+      <p>Hairstyles are judged first by whether a Soldier can still properly wear all required headgear (patrol cap, beret, helmet) and protective equipment. Hair that keeps headgear from fitting snugly, causes bulging, or interferes with a helmet or protective mask is not allowed. Styles that create a health or safety hazard are also prohibited.</p>
+    </div>
+
+    <div class="reg-section">
+      <h4>Neat, Conservative, Non-Extreme</h4>
+      <ul>
+        <li>Hair must always look neat, clean, and well-maintained — never ragged, unkempt, or extreme.</li>
+        <li>Faddish or eccentric cuts and styles aren't authorized.</li>
+        <li>No shapes, lines, or designs cut into the hair or scalp.</li>
+        <li>If hair is dyed, it has to stay a natural color — bright, neon, or unnatural shades (blue, purple, green, fire-engine red, etc.) are not permitted.</li>
+      </ul>
+    </div>
+
+    <div class="reg-section">
+      <h4>Male Haircut Standard</h4>
+      <ul>
+        <li>Hair on top must be neatly groomed, without excessive length or bulk, and present a tapered look — meaning the outline follows the shape of the head and narrows in toward the base of the neck.</li>
+        <li>When combed, hair should not fall over the ears or eyebrows, or touch the collar (aside from closely-cut hair at the very back of the neck).</li>
+        <li>A moderate amount of block-cut fullness in the back is fine as long as the overall tapered shape is kept.</li>
+        <li>Fully shaved or very closely-cropped hair (like a 0 guard) is authorized.</li>
+        <li>Styles that leave a single untapered patch of hair — mohawks, "horseshoe" cuts, or a teardrop patch on the front — are considered eccentric and are not authorized.</li>
+        <li>Braids, cornrows, twists, dreadlocks, or locks are not authorized for male haircuts in uniform or on duty.</li>
+      </ul>
+    </div>
+
+    <div class="reg-section">
+      <h4>Sideburns</h4>
+      <p>Sideburns can't extend below the bottom of the ear opening, can't be shaped to taper, flare, or come to a point, and individual hairs can't exceed 1/8 inch when fully extended.</p>
+    </div>
+
+    <div class="reg-section">
+      <h4>Female Hairstyles</h4>
+      <p>Female hair is grouped into short, medium, and long length categories, each with its own length and bulk limits, plus rules for bangs, buns, ponytails, braids, cornrows, twists, and locks. The same "neat, conservative, not faddish" principle applies throughout. Because the specifics vary by category, refer to the official regulation or your cadre for exact measurements.</p>
+    </div>
+
+    <div class="reg-source">
+      This is a simplified, plain-language summary for Alpha Xuts and does not replace AR 670-1, other Army regulations, or local AIT policy. For the authoritative text, search AR 670-1 at <a href="https://armypubs.army.mil/ProductMaps/PubForm/AR.aspx" target="_blank" rel="noopener">armypubs.army.mil</a> or check with your chain of command.
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- ROUTING ----------
+  function showPage(name){
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + name).classList.add('active');
+    document.querySelectorAll('nav.links button, .mobile-menu button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('[data-page="' + name + '"]').forEach(b => b.classList.add('active'));
+    document.getElementById('stickyCta').style.display = (name === 'request') ? 'none' : '';
+    window.scrollTo({top:0, behavior:'instant'});
+  }
+
+  // ---------- MOBILE MENU ----------
+  function toggleMenu(){ document.getElementById('mobileMenu').classList.toggle('open'); }
+  function closeMenu(){ document.getElementById('mobileMenu').classList.remove('open'); }
+
+  // ---------- AR 670-1 MODAL ----------
+  function openRegModal(){
+    document.getElementById('regModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeRegModal(){
+    document.getElementById('regModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ---------- CHOICE PILLS ----------
+  function wireChoiceRow(rowId){
+    const row = document.getElementById(rowId);
+    row.querySelectorAll('.choice-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        row.querySelectorAll('.choice-pill').forEach(p => p.classList.remove('selected'));
+        pill.classList.add('selected');
+        row.dataset.selected = pill.dataset.value;
+      });
+    });
+  }
+  ['platoonRow','phaseRow','dayRow'].forEach(wireChoiceRow);
+
+  // ---------- PHONE VALIDATION ----------
+  function isValidPhone(value){
+    const digits = value.replace(/\D/g, '');
+    return digits.length === 10 || (digits.length === 11 && digits.startsWith('1'));
+  }
+
+  // ---------- DISCORD WEBHOOK ----------
+  // NOTE: an incoming webhook can only POST messages — it cannot receive the
+  // status-button clicks below. Turning those buttons into working status
+  // controls requires a small Discord bot/application with an interactions
+  // endpoint (server-side), which is outside what a static webhook can do.
+  const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1543055628472291398/7zK25Mi5HH6kDCs0DUeHlIiw1ZCp5uBmLmaucHUbDr9AQR6aXLVQinra9MZ4w79aIolv";
+
+  async function sendToDiscord(data){
+    const embed = {
+      title: "💈 NEW CUT REQUEST",
+      color: 0x1fa2ff,
+      fields: [
+        { name: "Name", value: data.name, inline: true },
+        { name: "Platoon", value: data.platoon.replace('Platoon ', ''), inline: true },
+        { name: "Phase", value: data.phase.replace('Phase ', ''), inline: true },
+        { name: "Phone", value: data.phone, inline: true },
+        { name: "Preferred Day", value: data.day, inline: true },
+        { name: "Status", value: "🟡 Pending", inline: true }
+      ]
+    };
+
+    const payload = {
+      embeds: [embed],
+      components: [
+        {
+          type: 1,
+          components: [
+            { type: 2, style: 2, label: "🟡 Pending",   custom_id: "status_pending" },
+            { type: 2, style: 3, label: "🟢 Confirmed", custom_id: "status_confirmed" },
+            { type: 2, style: 4, label: "🔴 Declined",  custom_id: "status_declined" },
+            { type: 2, style: 1, label: "🔵 Completed", custom_id: "status_completed" }
+          ]
+        }
+      ]
+    };
+
+    const res = await fetch(DISCORD_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if(!res.ok){
+      throw new Error("Discord webhook request failed (" + res.status + ")");
+    }
+  }
+
+  // ---------- FORM SUBMIT ----------
+  const form = document.getElementById('cutForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formMsg = document.getElementById('formMsg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formMsg.classList.remove('show');
+
+    const name = document.getElementById('fName').value.trim();
+    const phone = document.getElementById('fPhone').value.trim();
+    const platoon = document.getElementById('platoonRow').dataset.selected;
+    const phase = document.getElementById('phaseRow').dataset.selected;
+    const day = document.getElementById('dayRow').dataset.selected;
+
+    let valid = true;
+    function toggleError(inputId, errId, ok){
+      const errEl = document.getElementById(errId);
+      if(inputId){ document.getElementById(inputId).classList.toggle('error', !ok); }
+      errEl.classList.toggle('show', !ok);
+      if(!ok) valid = false;
+    }
+
+    toggleError('fName', 'err-name', name.length > 1);
+    toggleError(null, 'err-platoon', !!platoon);
+    toggleError(null, 'err-phase', !!phase);
+    toggleError('fPhone', 'err-phone', isValidPhone(phone));
+    toggleError(null, 'err-day', !!day);
+
+    if(!valid) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending…";
+
+    try {
+      await sendToDiscord({ name, phone, platoon, phase, day });
+      form.style.display = 'none';
+      document.getElementById('confirmCard').style.display = 'block';
+    } catch(err){
+      formMsg.textContent = "Couldn't send your request — " + err.message;
+      formMsg.classList.add('show');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Request Appointment";
+    }
+  });
+
+  function resetForm(){
+    form.reset();
+    document.querySelectorAll('.choice-pill').forEach(p => p.classList.remove('selected'));
+    document.querySelectorAll('.choice-row').forEach(r => r.dataset.selected = '');
+    document.querySelectorAll('.err-msg').forEach(e => e.classList.remove('show'));
+    document.querySelectorAll('input').forEach(i => i.classList.remove('error'));
+    form.style.display = 'block';
+    document.getElementById('confirmCard').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>
