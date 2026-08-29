@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Alpha Xuts — AIT Haircut Requests</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <a href="#" class="logo-link" onclick="showPage('home');closeMenu();return false;" aria-label="Alpha Xuts home">
+      <img class="logo-img" src="assets/logo.png" alt="Alpha Xuts">
+    </a>
+    <nav class="links">
+      <button data-page="home" class="active" onclick="showPage('home')">Home</button>
+      <button data-page="standards" onclick="showPage('standards')">Haircut Standards</button>
+      <button data-page="request" onclick="showPage('request')">Request a Cut</button>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" onclick="toggleMenu()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button data-page="home" class="active" onclick="showPage('home');closeMenu();">Home</button>
+  <button data-page="standards" onclick="showPage('standards');closeMenu();">Haircut Standards</button>
+  <button data-page="request" onclick="showPage('request');closeMenu();">Request a Cut</button>
+</div>
+
+<!-- ================= HOME ================= -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="burst"></div>
+    <div class="wrap hero-inner">
+      <span class="eyebrow">AIT HAIRCUT REQUESTS</span>
+      <h1>SHARP LOOKS.<br>STANDARD ISSUE.</h1>
+      <p class="lead">Alpha Xuts handles haircut requests for trainees — inside the standard, on your schedule. Know what's allowed for your phase, then send your request straight through.</p>
+      <div class="cta-row">
+        <button class="btn btn-primary" onclick="showPage('request')">Request a Cut</button>
+        <button class="btn btn-ghost" onclick="showPage('standards')">View Haircut Standards</button>
+      </div>
+
+      <div class="panel-strip">
+        <div class="cell">
+          <span class="num">01</span>
+          <h4>Know the Standard</h4>
+          <p>Review AR 670-1 grooming requirements in plain language.</p>
+        </div>
+        <div class="cell">
+          <span class="num">02</span>
+          <h4>Check Your Phase</h4>
+          <p>Phase 5 and Phase 6 have different haircut allowances.</p>
+        </div>
+        <div class="cell">
+          <span class="num">03</span>
+          <h4>Send Your Request</h4>
+          <p>Submit your info and get contacted to confirm.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= HAIRCUT STANDARDS ================= -->
+<div class="page" id="page-standards">
+  <section class="tight" style="padding-top:44px;">
+    <div class="wrap">
+      <span class="eyebrow">KNOW THE STANDARD. KNOW YOUR PHASE.</span>
+      <h1 style="margin-top:12px;">HAIRCUT STANDARDS</h1>
+      <p style="max-width:600px;margin-top:14px;">Review the applicable Army grooming standards and understand how they apply to Alpha Xuts haircut requests during AIT.</p>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">REGULATION</span>
+        <h2>AR 670-1</h2>
+      </div>
+      <div class="reg-card">
+        <h3>What it covers</h3>
+        <p>Army Regulation 670-1 sets the standards for the wear and appearance of Army uniforms and insignia, including requirements for a Soldier's hair and grooming. It's the source regulation behind every haircut rule referenced on this page.</p>
+        <p>This page gives a simplified, easy-to-read summary — it isn't a substitute for the regulation itself or for the guidance your AIT chain of command gives you.</p>
+        <div class="reg-actions">
+          <button class="reg-btn" onclick="openRegModal()">📖 Read the Full Haircut Regulations</button>
+          <a class="reg-btn secondary" href="https://armypubs.army.mil/ProductMaps/PubForm/AR.aspx" target="_blank" rel="noopener">↗ Search AR 670-1 on Army Pubs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">SUMMARY</span>
+        <h2>THE STANDARD</h2>
+        <p>Military haircuts must maintain a neat, professional appearance and comply with Army grooming requirements. In practice, that means:</p>
+      </div>
+      <div class="std-grid">
+        <div class="std-item"><span class="mark">→</span><p>Hair must be neat and well groomed at all times.</p></div>
+        <div class="std-item"><span class="mark">→</span><p>Hair must not interfere with the proper wear and fit of required headgear or protective equipment.</p></div>
+        <div class="std-item"><span class="mark">→</span><p>Hair must maintain the required appearance around the ears and neckline.</p></div>
+        <div class="std-item"><span class="mark">→</span><p>Extreme or prohibited hairstyles are not permitted, regardless of phase.</p></div>
+        <div class="std-item"><span class="mark">→</span><p>Your specific AIT unit may set stricter requirements than the general Army standard — local policy always applies on top of this.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tight">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">BY PHASE</span>
+        <h2>KNOW YOUR PHASE</h2>
+      </div>
+
+      <div class="two-col">
+        <div class="phase-block p5">
+          <span class="phase-tag">PHASE 05</span>
+          <div class="headline">0 GUARD ONLY</div>
+          <p>During Phase 5, haircut requests are limited to a 0 guard haircut. This is the clearest rule on this page — Phase 5 does not carry the additional flexibility available in Phase 6.</p>
+          <div class="phase-flow">PHASE 05 <span class="arrow">→</span> 0 GUARD</div>
+        </div>
+        <div class="phase-block p6">
+          <span class="phase-tag">PHASE 06</span>
+          <div class="headline">MORE PRIVILEGES</div>
+          <p>Phase 6 allows additional haircut options compared with Phase 5. This does not mean every hairstyle is automatically permitted — requests still have to comply with AR 670-1 and your AIT unit's rules.</p>
+          <div class="phase-flow">PHASE 06 <span class="arrow">→</span> EXPANDED OPTIONS</div>
+        </div>
+      </div>
+
+      <div class="notice">
+        <span class="eyebrow">IMPORTANT</span>
+        <p>This page is a simplified interpretation of haircut standards for Alpha Xuts. It does not replace AR 670-1, other applicable Army regulations, or local AIT policies. When requirements differ, follow the standard established by your chain of command and current AIT guidance.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= REQUEST A CUT ================= -->
+<div class="page" id="page-request">
+  <section class="tight" style="padding-top:44px;">
+    <div class="wrap">
+      <span class="eyebrow">SUBMIT YOUR INFO</span>
+      <h1 style="margin-top:12px;">REQUEST A CUT</h1>
+      <p style="max-width:560px;margin-top:14px;">Fill out the information below to request a haircut. Your request will be reviewed and you will be contacted to confirm your appointment.</p>
+    </div>
+  </section>
+
+  <section class="tight" style="padding-top:0;padding-bottom:100px;">
+    <div class="wrap">
+
+      <form class="form-card" id="cutForm" novalidate>
+        <div class="field">
+          <label for="fName">Name</label>
+          <input type="text" id="fName" placeholder="First and Last Name" autocomplete="name">
+          <div class="err-msg" id="err-name">Enter your first and last name.</div>
+        </div>
+
+        <div class="field">
+          <label>Platoon</label>
+          <div class="choice-row four" id="platoonRow">
+            <div class="choice-pill" data-value="Platoon 1">Platoon 1</div>
+            <div class="choice-pill" data-value="Platoon 2">Platoon 2</div>
+            <div class="choice-pill" data-value="Platoon 3">Platoon 3</div>
+            <div class="choice-pill" data-value="Platoon 4">Platoon 4</div>
+          </div>
+          <div class="err-msg" id="err-platoon">Select your platoon.</div>
+        </div>
+
+        <div class="field">
+          <label>Phase</label>
+          <div class="choice-row two" id="phaseRow">
+            <div class="choice-pill" data-value="Phase 5">Phase 5</div>
+            <div class="choice-pill" data-value="Phase 6">Phase 6</div>
+          </div>
+          <div class="err-msg" id="err-phase">Select your phase.</div>
+        </div>
+
+        <div class="field">
+          <label for="fPhone">Phone Number</label>
+          <input type="tel" id="fPhone" placeholder="(555) 123-4567" autocomplete="tel" inputmode="tel">
+          <div class="err-msg" id="err-phone">Enter a valid phone number.</div>
+        </div>
+
+        <div class="field">
+          <label>Preferred Day</label>
+          <div class="choice-row three" id="dayRow">
+            <div class="choice-pill" data-value="Friday">Friday</div>
+            <div class="choice-pill" data-value="Saturday">Saturday</div>
+            <div class="choice-pill" data-value="Sunday">Sunday</div>
+          </div>
+          <div class="err-msg" id="err-day">Select a preferred day.</div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">Request Appointment</button>
+        <div class="form-msg" id="formMsg"></div>
+      </form>
+
+      <div class="confirm-card" id="confirmCard" style="display:none;">
+        <span class="eyebrow">✓ SENT</span>
+        <h2>REQUEST SENT</h2>
+        <p>Your request has been received. You'll be contacted at the phone number you provided once your appointment is confirmed.</p>
+        <button class="btn btn-ghost" style="margin-top:20px;" onclick="resetForm()">Submit Another Request</button>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- sticky mobile CTA, hidden on the request page itself -->
+<div class="sticky-cta" id="stickyCta">
+  <button onclick="showPage('request')">Request a Cut</button>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-brand">
+      <img class="logo-img" src="assets/logo.png" alt="Alpha Xuts">
+      <div class="foot-sub">AIT HAIRCUT REQUESTS</div>
+    </div>
+    <nav>
+      <button onclick="showPage('home')">Home</button>
+      <button onclick="showPage('standards')">Haircut Standards</button>
+      <button onclick="showPage('request')">Request a Cut</button>
+    </nav>
+  </div>
+</footer>
+
+<!-- ================= AR 670-1 MODAL ================= -->
+<div class="modal-backdrop" id="regModal" onclick="if(event.target===this)closeRegModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <span class="eyebrow">AR 670-1 · SECTION 3-2</span>
+        <h2>HAIRCUT REGULATIONS</h2>
+      </div>
+      <button class="modal-close" onclick="closeRegModal()" aria-label="Close">✕</button>
+    </div>
+    <p class="modal-sub">A plain-language summary of the Army's hair and grooming standards that apply to haircuts. This is a simplified explanation, not the regulation itself.</p>
+
+    <div class="reg-section">
+      <h4>General Principle</h4>
+      <p>Hairstyles are judged first by whether a Soldier can still properly wear all required headgear (patrol cap, beret, helmet) and protective equipment. Hair that keeps headgear from fitting snugly, causes bulging, or interferes with a helmet or protective mask is not allowed. Styles that create a health or safety hazard are also prohibited.</p>
+    </div>
+
+    <div class="reg-section">
+      <h4>Neat, Conservative, Non-Extreme</h4>
+      <ul>
+        <li>Hair must always look neat, clean, and well-maintained — never ragged, unkempt, or extreme.</li>
+        <li>Faddish or eccentric cuts and styles aren't authorized.</li>
+        <li>No shapes, lines, or designs cut into the hair or scalp.</li>
+        <li>If hair is dyed, it has to stay a natural color — bright, neon, or unnatural shades (blue, purple, green, fire-engine red, etc.) are not permitted.</li>
+      </ul>
+    </div>
+
+    <div class="reg-section">
+      <h4>Male Haircut Standard</h4>
+      <ul>
+        <li>Hair on top must be neatly groomed, without excessive length or bulk, and present a tapered look — meaning the outline follows the shape of the head and narrows in toward the base of the neck.</li>
+        <li>When combed, hair should not fall over the ears or eyebrows, or touch the collar (aside from closely-cut hair at the very back of the neck).</li>
+        <li>A moderate amount of block-cut fullness in the back is fine as long as the overall tapered shape is kept.</li>
+        <li>Fully shaved or very closely-cropped hair (like a 0 guard) is authorized.</li>
+        <li>Styles that leave a single untapered patch of hair — mohawks, "horseshoe" cuts, or a teardrop patch on the front — are considered eccentric and are not authorized.</li>
+        <li>Braids, cornrows, twists, dreadlocks, or locks are not authorized for male haircuts in uniform or on duty.</li>
+      </ul>
+    </div>
+
+    <div class="reg-section">
+      <h4>Sideburns</h4>
+      <p>Sideburns can't extend below the bottom of the ear opening, can't be shaped to taper, flare, or come to a point, and individual hairs can't exceed 1/8 inch when fully extended.</p>
+    </div>
+
+    <div class="reg-section">
+      <h4>Female Hairstyles</h4>
+      <p>Female hair is grouped into short, medium, and long length categories, each with its own length and bulk limits, plus rules for bangs, buns, ponytails, braids, cornrows, twists, and locks. The same "neat, conservative, not faddish" principle applies throughout. Because the specifics vary by category, refer to the official regulation or your cadre for exact measurements.</p>
+    </div>
+
+    <div class="reg-source">
+      This is a simplified, plain-language summary for Alpha Xuts and does not replace AR 670-1, other Army regulations, or local AIT policy. For the authoritative text, search AR 670-1 at <a href="https://armypubs.army.mil/ProductMaps/PubForm/AR.aspx" target="_blank" rel="noopener">armypubs.army.mil</a> or check with your chain of command.
+    </div>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
